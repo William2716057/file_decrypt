@@ -14,16 +14,16 @@ CHUNK = 1 << 20  # 1 MiB plaintext per chunk
 #AES appends 16 byte tag to each chunk's ciphertext for tamper detection
 TAG = 16
  
- 
+#build padding
 def oaep():
     return padding.OAEP(mgf=padding.MGF1(hashes.SHA256()),
                         algorithm=hashes.SHA256(), label=None)
  
- 
+#build the number used once
 def chunk_nonce(prefix, index):
     return prefix + struct.pack(">I", index)
  
- 
+
 def load_private_key(path):
     with open(path, "rb") as f:
         data = f.read()
