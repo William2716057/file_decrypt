@@ -38,7 +38,7 @@ def decrypt_file(priv_path, in_path, out_path):
     priv = load_private_key(priv_path)
     try:
         with open(in_path, "rb") as src, open(out_path, "wb") as dst:
-            if src.read(len(MAGIC)) != MAGIC:
+            if src.read(len(MAGIC)) != MAGIC: #check header here
                 sys.exit("File not produced by this tool.")
             (wlen,) = struct.unpack(">H", src.read(2))
             key = priv.decrypt(src.read(wlen), oaep())
@@ -83,5 +83,5 @@ if __name__ == "__main__":
     try:
         decrypt_file(private_key, file_name, out_name)
     except Exception as e:
-        sys.exit(f"Decryption failed ({type(e).__name__}): wrong key, or the file is corrupted/tampered.")
+        sys.exit(f"Failed ({type(e).__name__}): wrong key, or the file has been corrupted.")
     print(f"Decrypted {file_name} as {out_name}")
