@@ -7,8 +7,11 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
  
-MAGIC = b"PKENC1\n"
+
+MAGIC = b"PKENC1\n" #File signature writtent to encrypted file
+#bitshift left
 CHUNK = 1 << 20  # 1 MiB plaintext per chunk
+#AES appends 16 byte tag to each chunk's ciphertext for tamper detection
 TAG = 16
  
  
